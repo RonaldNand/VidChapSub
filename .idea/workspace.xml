@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="843a9b42-dd02-455c-9ef7-3e2854023ae1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sandbox.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TimeStamptoFFMPEGMetadata.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample_Chapters.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample_Chapters.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/script.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,19 +26,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ron/Desktop/Github Projects/FFMPeg/Chapter-and-Thumbnail-to-FFMPEG-MetaData&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/Ron/Desktop/Python Project/VidChapSub"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Ron\Desktop\Github Projects\FFMPeg\Chapter-and-Thumbnail-to-FFMPEG-MetaData\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.sandbox">
+  <component name="RunManager">
     <configuration name="sandbox" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Chapter-and-Thumbnail-to-FFMPEG-MetaData" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -60,7 +61,7 @@
       <method v="2" />
     </configuration>
     <configuration name="script" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <module name="Chapter-and-Thumbnail-to-FFMPEG-MetaData" />
+      <module name="VidChapSub" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -72,7 +73,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/script.py" />
-      <option name="PARAMETERS" value="-v sample.mp4 -c NewDataFormat.csv -s sub.srt -t thumb.png" />
+      <option name="PARAMETERS" value="-v sample.mp4 -c sample_Chapters.csv -t sample_thumb.png -s sample_sub.srt" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -97,7 +98,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/script.py</url>
-          <line>215</line>
+          <line>218</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

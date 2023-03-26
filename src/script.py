@@ -59,14 +59,17 @@ def addChapterstoMetadata(chapterFile):
             meta[2] = (f'START=0\n')
             millis.append(milliseconds)
         else:
-            meta[2] = (f'START={millis[count - 1]}\n')
+            meta[2] = (f'START={milliseconds}\n')
             millis.append(milliseconds)
         # IF Last Data Line in CSV (Last Chapter), set end to milliseconds plus 1.
         # ELSE set end to milliseconds in line..
         if count >= total - 1:
+            metadata[count - 1][3] = (f'END={milliseconds - 1}\n')
             meta[3] = (f'END={milliseconds + 1}\n')
+        elif count == 0:
+            pass
         else:
-            meta[3] = (f'END={milliseconds - 1}\n')
+            metadata[count - 1][3] = (f'END={milliseconds - 1}\n')
         meta[4] = (f'title={title}\n')
         # ADD completed MetaData Entry to Chapter Metadata
         metadata.append(meta)
