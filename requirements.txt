@@ -1,2 +1,3 @@
 Python 3.11.2
+ffmpeg-python
 ffmpeg v6.0

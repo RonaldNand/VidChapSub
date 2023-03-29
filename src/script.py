@@ -2,16 +2,23 @@ import os
 import subprocess
 import argparse
 import csv
+from pathlib import Path
 
 
-workingMetaDataTitle = "FFMETADATAFILE.txt"
+workingMetaDataTitle = "\FFMETADATAFILE.txt"
 
 videoFile = None
+metaDataFile = None
 chapterFile = None
 subtitleFile = None
 thumbnailFile = None
 
 
+
+
+def encaseInQuotes(argument):
+    output = '"'+str(argument)+'"'
+    return output
 
 # Get Lines from supplied CSV File
 def extractCSVLines(csvfile):
@@ -75,10 +82,10 @@ def addChapterstoMetadata(chapterFile):
         metadata.append(meta)
         count += 1
     # Write Chapter Metadata Entries to extracted metadata file.
-    with open(workingMetaDataTitle,"a+") as metaDataFile:
+    with open(metaDataFile,"a+") as metaDataFile1:
         for x in range(len(metadata)):
             for y in range(len(metadata[x])):
-                metaDataFile.writelines(metadata[x][y])
+                metaDataFile1.writelines(metadata[x][y])
 
 # SETUP Arguments to be used during program
 def setupArgs():
@@ -99,7 +106,7 @@ def setupArgs():
 
 # RUN command to extract metadata file from video file and set its name to global variable.
 def getVideoFileMetadata(videoFile):
-    getMetaDataStr = f'ffmpeg -i {videoFile} -f ffmetadata {workingMetaDataTitle}'
+    getMetaDataStr = f'ffmpeg -i {encaseInQuotes(videoFile)} -f ffmetadata {encaseInQuotes(metaDataFile)}'
 
     cmdResult = subprocess.run(getMetaDataStr)
 
@@ -147,27 +154,27 @@ def generateCMDCommand(functions):
         middle += "-"
     middle = middle[:-1]
 
-    newFileName = videoFile[:-4] + middle + videoFile[-4:]
+    newFileName = str(videoFile.parent) + "/" + videoFile.stem + middle + videoFile.suffix
 
     # IF the specified function is provided fill in the array with commands.
     count = 1
     if 'chapter' in functions:
-        chapterCMD[0] = "-i FFMETADATAFILE.txt"
+        chapterCMD[0] = f'-i {encaseInQuotes(metaDataFile)}'
         chapterCMD[1] = f'-map_metadata {count}'
         count += 1
     if 'subtitle' in functions:
-        subtitleCMD[0] = f'-i {subtitleFile}'
+        subtitleCMD[0] = f'-i {encaseInQuotes(subtitleFile)}'
         subtitleCMD[1] = f'-map {count}:s:0'
         subtitleCMD[2] = "-c:s mov_text"
         count += 1
     if "thumbnail" in functions:
-        thumbnailCMD[0] = f'-i {thumbnailFile}'
+        thumbnailCMD[0] = f'-i {encaseInQuotes(thumbnailFile)}'
         thumbnailCMD[1] = f'-map {count}'
         thumbnailCMD[2] = "-disposition:0 attached_pic"
 
     # Create the three elements of the FFMPEG command, if a function is not specified its spots will in the string will
     # blank characters which FFMPEG will ignore.
-    input = f'-i {videoFile} {chapterCMD[0]} {subtitleCMD[0]} {thumbnailCMD[0]}'
+    input = f'-i {encaseInQuotes(videoFile)} {chapterCMD[0]} {subtitleCMD[0]} {thumbnailCMD[0]}'
 
     maps = f'{thumbnailCMD[1]} -map 0 {chapterCMD[1]} {subtitleCMD[1]}'
 
@@ -195,30 +202,25 @@ def main():
         parser.error("Atleast one chapter, subtitle, or thumbnail file must be provided!")
 
     # SET global variables based on arguments provided.
-    global videoFile, chapterFile, subtitleFile, thumbnailFile
+    global videoFile, chapterFile, subtitleFile, thumbnailFile, metaDataFile
 
-    videoFile = args.video_file
-    chapterFile = args.chapter_file
-    subtitleFile = args.subtitle_file
-    thumbnailFile = args.thumbnail_file
+    videoFile = Path(args.video_file)
+    chapterFile = Path(args.chapter_file) if args.chapter_file is not None else args.chapter_file
+    subtitleFile = Path(args.subtitle_file) if args.subtitle_file is not None else args.subtitle_file
+    thumbnailFile = Path(args.thumbnail_file) if args.thumbnail_file is not None else args.thumbnailfile
+    metaDataFile = Path(str(videoFile.parent) +  workingMetaDataTitle)
+
     if args.remove == "remove":
         keepOriginal = False
     else:
         keepOriginal = True
 
-    # Extract FFMPEG Metadata from specified Video File.
-    getVideoFileMetadata(videoFile)
+    if chapterFile is not None:
+        # Extract FFMPEG Metadata from specified Video File.
+        getVideoFileMetadata(videoFile)
 
-    print("######")
-    print("Metadata Extraction Complete")
-    print("######")
-
-    # Update FFMPEG Metadata Text File Using Chapter File specified.
-    addChapterstoMetadata(chapterFile)
-
-    print("######")
-    print("Chapters Added to MetaData File")
-    print("######")
+        # Update FFMPEG Metadata Text File Using Chapter File specified.
+        addChapterstoMetadata(chapterFile)
 
     # Check if arguments were provided for chapters, subtitles or thumbnails.
     # ADD these to functions and provide functions list to generate FFMPEG command.
@@ -241,14 +243,15 @@ def main():
 
     # Rename or Delete the Original Video File
     if keepOriginal:
-        newName = videoFile[:-4] + "_original" + videoFile[-4:]
+        newName = videoFile.stem + "_original" + videoFile.suffix
+
         os.rename(videoFile,newName)
     else:
         os.remove(videoFile)
 
     print("#####\nStarting Cleanup\n#####")
 
-    os.remove(workingMetaDataTitle)
+    os.remove(metaDataFile)
 
     print("######")
     print("Process Complete!")
