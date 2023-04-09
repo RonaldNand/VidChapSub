@@ -207,6 +207,9 @@ def main():
     global videoFile, chapterFile, subtitleFile, thumbnailFile, metaDataFile
 
     videoFile = Path(args.video_file)
+    chapterFile = args.chapter_file
+    subtitleFile = args.subtitle_file
+    thumbnailFile = args.thumbnail_file
     if not os.path.exists(videoFile):
         print("Invalid video path given. Exiting")
         sys.exit()

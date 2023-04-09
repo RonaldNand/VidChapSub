@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="843a9b42-dd02-455c-9ef7-3e2854023ae1" name="Changes" comment="Updating Windows Path bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/script.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
