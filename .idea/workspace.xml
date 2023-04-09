@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="843a9b42-dd02-455c-9ef7-3e2854023ae1" name="Changes" comment="">
+    <list default="true" id="843a9b42-dd02-455c-9ef7-3e2854023ae1" name="Changes" comment="Updating Windows Path bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/script.py" afterDir="false" />
@@ -79,7 +79,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/script.py" />
-      <option name="PARAMETERS" value="-v &quot;C:\Users\Ron\Desktop\Python Project\VidChapSub\src\sample.mp4&quot; -t sample_thumb.png -c sample_Chapters.csv" />
+      <option name="PARAMETERS" value="-v &quot;C:\Users\Ron\Desktop\TEMP\Video\Call of Duty 1 Mod Aachen (Colour Corrected).mp4&quot; -t &quot;C:\Users\Ron\Desktop\TEMP\Video\Call of Duty 1 Mod Aachen.png&quot;" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -97,32 +97,18 @@
       <option name="presentableId" value="Default" />
       <updated>1678966238313</updated>
     </task>
+    <task id="LOCAL-00001" summary="Updating Windows Path bug">
+      <created>1680064781640</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1680064781640</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/script.py</url>
-          <line>186</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/script.py</url>
-          <line>226</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/script.py</url>
-          <line>110</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/script.py</url>
-          <line>212</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updating Windows Path bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating Windows Path bug" />
   </component>
 </project>

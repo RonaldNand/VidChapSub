@@ -2,6 +2,7 @@ import os
 import subprocess
 import argparse
 import csv
+import sys
 from pathlib import Path
 
 
@@ -63,26 +64,26 @@ def addChapterstoMetadata(chapterFile):
         # ELSE set start to the end of previous to the end of the previous milliseconds.
         # Add milliseconds in line to an array.
         if count == 0:
-            meta[2] = (f'START=0\n')
+            meta[2] = f'START=0\n'
             millis.append(milliseconds)
         else:
-            meta[2] = (f'START={milliseconds}\n')
+            meta[2] = f'START={milliseconds}\n'
             millis.append(milliseconds)
         # IF Last Data Line in CSV (Last Chapter), set end to milliseconds plus 1.
         # ELSE set end to milliseconds in line..
         if count >= total - 1:
-            metadata[count - 1][3] = (f'END={milliseconds - 1}\n')
-            meta[3] = (f'END={milliseconds + 1}\n')
+            metadata[count - 1][3] = f'END={milliseconds - 1}\n'
+            meta[3] = f'END={milliseconds + 1}\n'
         elif count == 0:
             pass
         else:
-            metadata[count - 1][3] = (f'END={milliseconds - 1}\n')
+            metadata[count - 1][3] = f'END={milliseconds - 1}\n'
         meta[4] = (f'title={title}\n')
         # ADD completed MetaData Entry to Chapter Metadata
         metadata.append(meta)
         count += 1
     # Write Chapter Metadata Entries to extracted metadata file.
-    with open(metaDataFile,"a+") as metaDataFile1:
+    with open(metaDataFile, "a+") as metaDataFile1:
         for x in range(len(metadata)):
             for y in range(len(metadata[x])):
                 metaDataFile1.writelines(metadata[x][y])
@@ -107,6 +108,7 @@ def setupArgs():
 # RUN command to extract metadata file from video file and set its name to global variable.
 def getVideoFileMetadata(videoFile):
     getMetaDataStr = f'ffmpeg -i {encaseInQuotes(videoFile)} -f ffmetadata {encaseInQuotes(metaDataFile)}'
+    print(f'Command Used: {getMetaDataStr}')
 
     cmdResult = subprocess.run(getMetaDataStr)
 
@@ -154,7 +156,7 @@ def generateCMDCommand(functions):
         middle += "-"
     middle = middle[:-1]
 
-    newFileName = str(videoFile.parent) + "/" + videoFile.stem + middle + videoFile.suffix
+    newFileName = str(videoFile.parent) + "\\" + videoFile.stem + middle + videoFile.suffix
 
     # IF the specified function is provided fill in the array with commands.
     count = 1
@@ -182,7 +184,7 @@ def generateCMDCommand(functions):
 
     # Put together command.
 
-    cmd = f'ffmpeg {input} {maps} -c copy {copyArgs} {newFileName}'
+    cmd = f'ffmpeg {input} {maps} -c copy {copyArgs} {encaseInQuotes(newFileName)}'
 
     return cmd
 
@@ -205,10 +207,25 @@ def main():
     global videoFile, chapterFile, subtitleFile, thumbnailFile, metaDataFile
 
     videoFile = Path(args.video_file)
-    chapterFile = Path(args.chapter_file) if args.chapter_file is not None else args.chapter_file
-    subtitleFile = Path(args.subtitle_file) if args.subtitle_file is not None else args.subtitle_file
-    thumbnailFile = Path(args.thumbnail_file) if args.thumbnail_file is not None else args.thumbnailfile
-    metaDataFile = Path(str(videoFile.parent) +  workingMetaDataTitle)
+    if not os.path.exists(videoFile):
+        print("Invalid video path given. Exiting")
+        sys.exit()
+    if chapterFile is not None:
+        chapterFile = Path(args.chapter_file)
+        if not os.path.exists(chapterFile):
+            print("Invalid video path given. Exiting")
+            sys.exit()
+    if subtitleFile is not None:
+        subtitleFile = Path(args.subtitle_file)
+        if not os.path.exists(subtitleFile):
+            print("Invalid video path given. Exiting")
+            sys.exit()
+    if thumbnailFile is not None:
+        thumbnailFile = Path(args.thumbnail_file)
+        if not os.path.exists(thumbnailFile):
+            print("Invalid video path given. Exiting")
+            sys.exit()
+    metaDataFile = Path(str(videoFile.parent) + workingMetaDataTitle)
 
     if args.remove == "remove":
         keepOriginal = False
@@ -234,12 +251,9 @@ def main():
         functions.append('thumbnail')
 
     updateCommand = generateCMDCommand(functions)
+    print(f'Command Used: {updateCommand}')
 
     cmdResult = subprocess.run(updateCommand)
-
-    print("######")
-    print("Updated Metadata Succesfully Added")
-    print("######")
 
     # Rename or Delete the Original Video File
     if keepOriginal:
@@ -251,7 +265,8 @@ def main():
 
     print("#####\nStarting Cleanup\n#####")
 
-    os.remove(metaDataFile)
+    if metaDataFile is not None:
+        os.remove(metaDataFile)
 
     print("######")
     print("Process Complete!")
